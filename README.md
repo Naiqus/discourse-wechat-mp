@@ -40,4 +40,3 @@ CREATE TABLE `account_binding` (
 * send Wechat identification code to user**--->** 
 * Detect identification code from user reply **--->** 
 * validate the code, update database, add user's wechat OpenID.
-
