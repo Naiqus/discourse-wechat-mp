@@ -5,7 +5,7 @@ MySQL is not necessary since what we need for now is just a table. It could be r
 
 ---
 
-**The implemented functions of the Wechat MP:**
+**The implemented functions:**
 
 - reply "?" to check usage.
 - reply "最新" to get weekly highlights list 
@@ -31,7 +31,7 @@ CREATE TABLE `account_binding` (
 3. Check the files. Set constants and modify strings according to your own configuration.
 
 
-## Workflow
+## Work flow
 
 * Store Discourse user API key, identification code and username in a database.
 * discourse user request for the API key**--->** 
