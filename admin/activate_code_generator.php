@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
-    <title>E1zone WX Manage</title>
+    <title>Wechat Activation Code Generator</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   </head>
   <body>
@@ -45,7 +45,7 @@
         <fieldset>
 
         <!-- Form Name -->
-        <legend>东一区微信绑定管理</legend>
+        <legend>Discourse微信绑定管理</legend>
 
         <!-- Text input-->
         <div class="control-group">
