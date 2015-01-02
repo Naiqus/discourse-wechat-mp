@@ -1,6 +1,8 @@
-<html>
+<!DOCTYPE HTML>
+<html lang="zh-CN">
   <head>
-    <title>Wechat Activation Code Generator</title>
+    <meta charset="utf-8">
+    <title>E1zone WX Manage</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
   </head>
   <body>
@@ -29,6 +31,13 @@
         }
       }
     ?>
+  <script type="text/javascript">
+    function keyupFunction(){
+    var api = document.getElementById("api").value;
+    var apilast8 = api.slice(-8);  //last 8 letters
+    document.getElementById("userbindingkey").value = apilast8;
+    }
+  </script>
   <div class="container">
     <div class="row">
       <div class="center-block col-md-5">
@@ -51,7 +60,7 @@
         <div class="control-group">
           <label class="control-label" for="api">输入API_key</label>
           <div class="controls">
-            <input id="api" name="api" type="text" placeholder="API_key" class="input-xlarge">
+            <input id="api" name="api" type="text" placeholder="API_key" class="input-xlarge" onkeyup="keyupFunction()">
             <span class="error">* <?php echo $apiErr;?></span>
           </div>
         </div>
@@ -80,9 +89,9 @@
       </div>
     </div>
   </div>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+  
 
-  <?php
+ <?php
       function test_input($data) {    //preprocess input
          $data = trim($data);
          $data = stripslashes($data);
@@ -94,19 +103,24 @@
         $db_username = "YourUsername";
         $db_password = "YourPassword";
 
-      if(!empty($username)&&!empty($api)&&!empty($userbindingkey)){
-        $connection = mysql_connect($db_servername, $db_username, $db_password) OR DIE ("Unable to connect to database! Please try again later.");
+      if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        if(!empty($username)&&!empty($api)&&!empty($userbindingkey)){
+          $connection = mysql_connect($db_servername, $db_username, $db_password) OR DIE ("Unable to connect to database! Please try again later.");
         if (!$connection){
-          echo "<div class=\"alert alert-danger\">服务器异常，请稍后重试。</div>";
+          if (!$connection){
+            echo "<div class=\"alert alert-danger\">服务器异常，请稍后重试。</div>";
+          }else{
+                mysql_select_db("discourseUsers");
+                $sql = "INSERT INTO `account_binding` (`username`, `API_key`, `index`, `openID`) VALUES ('".$username."', '".$api."', '".$userbindingkey."', NULL);";            
+                if (mysql_query($sql)) {
+                    echo "<div class=\"alert alert-success\">用户:".$username."添加成功\n 请将用户绑定key：<b>".$userbindingkey."</b> 私信给用户</div>";
+                } else {
+                    echo "<div class=\"alert alert-danger\">用户添加失败，请稍后重试</div>";
+                }
+                mysql_close($connection);
+          }
         }else{
-              mysql_select_db("discourseUsers");
-              $sql = "INSERT INTO `account_binding` (`username`, `API_key`, `index`, `openID`) VALUES ('".$username."', '".$api."', '".$userbindingkey."', NULL);";            
-              if (mysql_query($sql)) {
-                  echo "<div class=\"alert alert-success\">用户:".$username."添加成功\n 请将用户绑定key：<b>".$userbindingkey."</b> 私信给用户</div>";
-              } else {
-                  echo "<div class=\"alert alert-danger\">用户添加失败，请稍后重试</div>";
-              }
-              mysql_close($connection);
+          echo "<div class=\"alert alert-danger\">有未填项，请仔细检查下</div>";
         }
       }
   ?>
